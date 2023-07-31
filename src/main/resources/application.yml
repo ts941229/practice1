@@ -1,0 +1,25 @@
+#server config
+server:
+  port: 9090
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+
+# thymeleaf
+spring:
+  thymeleaf:
+    cache: false
+
+#dbms
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:XE
+    driver-class-name: oracle.jdbc.OracleDriver
+    username: practice01
+    password: 1234
+    
+ #jpa
+  jpa:
+    show-sql: true
+    
