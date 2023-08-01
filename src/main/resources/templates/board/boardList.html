@@ -11,15 +11,15 @@
 	<!-- nav -->
 	<th:block th:replace="/fragments/nav.html :: fragment-nav" />
 
-	<div class="container-sm mt-3">
+	<div class="container-sm mt-4">
 		
 		<table class="table">
 			<thead>
     			<tr>
-					<th scope="col">#</th>
-					<th scope="col">First</th>
-					<th scope="col">Last</th>
-					<th scope="col">Handle</th>
+					<th scope="col"></th>
+					<th scope="col">작성자</th>
+					<th scope="col">제목</th>
+					<th scope="col">작성날짜</th>
 				</tr>
  			</thead>
 			<tbody>
@@ -42,6 +42,35 @@
 				</tr>
 			</tbody>
 		</table>
+		
+		<nav aria-label="Page navigation example">
+			<ul class="pagination justify-content-center">
+				<li class="page-item disabled">
+					<a class="page-link">Previous</a>
+				</li>
+				<li class="page-item active"><a class="page-link" href="#">1</a></li>
+				<li class="page-item"><a class="page-link" href="#">2</a></li>
+				<li class="page-item"><a class="page-link" href="#">3</a></li>
+				<li class="page-item">
+					<a class="page-link" href="#">Next</a>
+				</li>
+			</ul>
+		</nav>
+		
+		<form class="d-flex px-5" role="search">
+			<select class="form-select flex-grow-0" aria-label="Default select example">
+				<option selected>제목</option>
+				<option value="1">One</option>
+				<option value="2">Two</option>
+				<option value="3">Three</option>
+			</select>
+			
+			<div class="input-group flex-grow-1">
+				<input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+				<button class="btn btn-primary" type="button" id="button-addon2">Button</button>
+			</div>
+
+	    </form>
 		
 	</div>
 
