@@ -8,7 +8,6 @@ public class IndexController {
 
 	@GetMapping("/")
 	public String mainPage() {
-		System.out.println("mainForm 들어옴");
 		return "/main/index";
 	}
 	
