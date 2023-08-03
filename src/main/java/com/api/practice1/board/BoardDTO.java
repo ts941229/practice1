@@ -14,5 +14,6 @@ public class BoardDTO {
 	private String board_date;
 	private int board_hit;
 	private int board_like;
+	private String board_category;
 	
 }

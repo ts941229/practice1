@@ -22,7 +22,7 @@ public class Board {
 	
 	@Builder(toBuilder = true)
 	protected Board(Long board_id, String board_title, String board_writer, String board_content, String board_date,
-			int board_hit, int board_like) {
+			int board_hit, int board_like, String board_category) {
 		this.board_id = board_id;
 		this.board_title = board_title;
 		this.board_writer = board_writer;
@@ -30,6 +30,7 @@ public class Board {
 		this.board_date = board_date;
 		this.board_hit = board_hit;
 		this.board_like = board_like;
+		this.board_category = board_category;
 	}
 	
 	@Id
@@ -42,4 +43,5 @@ public class Board {
 	private String board_date;
 	private int board_hit;
 	private int board_like;
+	private String board_category;
 }
