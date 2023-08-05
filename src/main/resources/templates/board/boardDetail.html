@@ -36,12 +36,12 @@
 				
 				<button class="btn btn-primary" th:onclick="|location.href='@{/board/board-list-form}'|">글목록</button>
 				<button class="btn btn-primary" th:onclick="|location.href='@{/board/board-edit-form/{board_id}(board_id=${board.board_id})}'|">수정</button>
+				<form action="#" th:action="@{/board/board-delete/{board_id}(board_id=${board.board_id})}" method="post" style="display: inline;">
+					<input type="hidden" name="_method" value="delete"/>
+					<input type="submit" class="btn btn-primary" value="삭제"/>
+				</form>
 			</div>
 			
-			<form action="#" th:action="@{/board/board-delete/{board_id}(board_id=${board.board_id})}" method="post">
-				<input type="hidden" name="_method" value="delete"/>
-				<input type="submit" class="btn btn-primary" value="삭제"/>
-			</form>
 			
 		
 	</div>
