@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Insert title here</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-</head>
+<!-- head -->
+<th:block th:replace="/fragments/header.html :: fragment-header"/>
 <body>
 	
 	<!-- nav -->
@@ -13,7 +9,7 @@
 
 	<div class="container-sm mt-4">
 		
-		<table class="table">
+		<table class="table table table-hover">
 		
 			<thead>
     			<tr>
@@ -26,7 +22,7 @@
  			
 			<tbody>
 				<th:block th:each="board, i : ${boardList}">
-					<tr>
+					<tr th:onclick="@{|location.href='/board/board-detail-form/${board.board_id}'|}">
 						<th scope="row" th:text="${i.count}">1</th>
 						<td th:text="${board.board_writer}">작성자</td>
 						<td th:text="${board.board_title}">제목</td>
@@ -38,8 +34,6 @@
 		
 		<div class="">
 			<button class="btn btn-primary" th:onclick="|location.href='@{/board/board-write-form}'|">글 등록</button>
-			<button class="btn btn-primary">수정</button>
-			<button class="btn btn-primary">삭제</button>
 		</div>
 		
 		<nav aria-label="Page navigation example">
@@ -75,5 +69,4 @@
 
 </body>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- head -->
+<th:block th:replace="/fragments/header.html :: fragment-header"/>
+<body>
+
+	<!-- nav -->
+	<th:block th:replace="/fragments/nav.html :: fragment-nav" />
+	
+	<div class="container-sm mt-4">
+		
+		<form action="#" th:action="@{/board/board-edit/{board_id}(board_id=${board.board_id})}" method="post">
+			<input type="hidden" name="_method" value="put">
+			
+			<div class="mb-3">
+				<label for="exampleFormControlInput1" class="form-label">수정할 카테고리를 선택해주세요.</label>
+				<select class="form-select" aria-label="Default select example" name="board_category">
+					<th:block th:if="${board.board_category}=='카테고리1'">
+						<option selected th:text="${board.board_category}">카테고리1</option>
+						<option value="카테고리2">카테고리2</option>
+						<option value="카테고리3">카테고리3</option>
+					</th:block>
+					<th:block th:if="${board.board_category}=='카테고리2'">
+						<option selected th:text="${board.board_category}">카테고리2</option>
+						<option value="카테고리1">카테고리1</option>
+						<option value="카테고리3">카테고리3</option>
+					</th:block>
+					<th:block th:if="${board.board_category}=='카테고리3'">
+						<option selected th:text="${board.board_category}">카테고리3</option>
+						<option value="카테고리1">카테고리1</option>
+						<option value="카테고리2">카테고리2</option>
+					</th:block>
+					
+					<option value="카테고리1">카테고리1</option>
+				</select>
+			</div>
+			
+			<div class="mb-3">
+				<label for="exampleFormControlInput1" class="form-label">글쓴이</label>
+				<input type="text" class="form-control" id="exampleFormControlInput1" name="board_writer" th:value="${board.board_writer}" readonly disabled>
+			</div>
+			
+			<div class="mb-3">
+				<label for="exampleFormControlInput1" class="form-label">수정할 제목을 입력해주세요.</label>
+				<input type="text" class="form-control" id="exampleFormControlInput1" name="board_title" th:value="${board.board_title}">
+			</div>
+			
+			
+			<div class="mb-3">
+				<label for="exampleFormControlTextarea1" class="form-label">수정할 내용을 입력해주세요.</label>
+				<textarea class="form-control" id="exampleFormControlTextarea1" name="board_content" rows="5" th:text="${board.board_content}"></textarea>
+			</div>
+			
+			<div class="mb-3">
+				<input type="submit" value="수정하기" class="btn btn-primary">			
+				<button class="btn btn-primary" th:onclick="|location.href='@{/board/board-edit-form/{board_id}(board_id=${board.board_id})}'|">취소</button>
+			</div>
+			
+		</form>
+		
+	</div>
+	
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<script>
+	
+</script>
+</html>

@@ -12,6 +12,7 @@ public class BoardDTO {
 	private String board_writer;
 	private String board_content;
 	private String board_date;
+	private String board_updated_date;
 	private int board_hit;
 	private int board_like;
 	private String board_category;

@@ -1,6 +1,7 @@
 package com.api.practice1.board;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,10 @@ public class BoardService {
 	
 	public void save(Board board) {
 		boardRepository.save(board);
+	}
+	
+	public Optional<Board> findById(Long board_id) {
+		return boardRepository.findById(board_id);
 	}
 	
 }
