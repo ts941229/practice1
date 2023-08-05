@@ -27,4 +27,8 @@ public class BoardService {
 		return boardRepository.findById(board_id);
 	}
 	
+	public void deleteById(Long board_id) {
+		boardRepository.deleteById(board_id);
+	}
+	
 }
