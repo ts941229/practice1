@@ -79,19 +79,22 @@ public class BoardController {
 	}
 	
 	@PutMapping("/board-edit/{board_id}")
-	public String boardEdit(@PathVariable("board_id") Long board_id) {
+	public String boardEdit(@PathVariable("board_id") Long board_id, @ModelAttribute BoardDTO boardDTO) {
+		
+		Board pre_board = boardService.findById(board_id).get();
 		
 		Board board = Board.builder()
 										.board_id(board_id)
-										.board_category(null)
-										.board_title(null)
-										.board_writer(null)
-										.board_content(null)
+										.board_category(boardDTO.getBoard_category())
+										.board_title(boardDTO.getBoard_title())
+										.board_writer(pre_board.getBoard_writer())
+										.board_content(boardDTO.getBoard_content())
 										.board_updated_date(Util.getInstance().dateFormat(new Date()))
+										.board_date(pre_board.getBoard_date())
+										.board_like(pre_board.getBoard_like())
+										.board_hit(pre_board.getBoard_hit())
 										.build();
-//		boardService.save(board);
-		
-		System.out.println("boardEdit메서드");
+		boardService.save(board);
 		
 		return "redirect:/board/board-detail-form/"+board_id;
 	}
