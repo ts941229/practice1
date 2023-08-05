@@ -55,8 +55,8 @@
 				<textarea class="form-control" id="exampleFormControlTextarea1" name="board_content" rows="5" th:text="${board.board_content}"></textarea>
 			</div>
 			
-			<div class="mb-3">
-				<input type="submit" value="수정하기" class="btn btn-primary">			
+			<div class="mb-3 float-end">
+				<input type="submit" value="수정하기" class="btn btn-info">			
 				<button class="btn btn-primary" th:onclick="|location.href='@{/board/board-edit-form/{board_id}(board_id=${board.board_id})}'|">취소</button>
 			</div>
 			

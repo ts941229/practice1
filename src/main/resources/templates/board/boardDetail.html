@@ -32,17 +32,17 @@
 			<textarea class="form-control" id="exampleFormControlTextarea1" name="board_content" rows="5" th:text="${board.board_content}" readonly></textarea>
 		</div>
 		
-			<div class="mb-3">
-				
-				<button class="btn btn-primary" th:onclick="|location.href='@{/board/board-list-form}'|">글목록</button>
-				<button class="btn btn-primary" th:onclick="|location.href='@{/board/board-edit-form/{board_id}(board_id=${board.board_id})}'|">수정</button>
+		<div class="mb-3">
+			
+			<button class="btn btn-primary" th:onclick="|location.href='@{/board/board-list-form}'|">글목록</button>
+			<div class="float-end">
+				<button class="btn btn-info" th:onclick="|location.href='@{/board/board-edit-form/{board_id}(board_id=${board.board_id})}'|">수정</button>
 				<form action="#" th:action="@{/board/board-delete/{board_id}(board_id=${board.board_id})}" method="post" style="display: inline;">
 					<input type="hidden" name="_method" value="delete"/>
-					<input type="submit" class="btn btn-primary" value="삭제"/>
+					<input type="submit" class="btn btn-danger" value="삭제"/>
 				</form>
 			</div>
-			
-			
+		</div>
 		
 	</div>
 	

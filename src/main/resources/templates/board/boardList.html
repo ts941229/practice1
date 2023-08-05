@@ -9,7 +9,18 @@
 
 	<div class="container-sm mt-4">
 		
-		<table class="table table table-hover">
+		<div class="btn-group float-end">
+			<button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+			  5개씩 보기
+			</button>
+			<ul class="dropdown-menu">
+				<li><a class="dropdown-item" href="#">10개씩 보기</a></li>
+				<li><a class="dropdown-item" href="#">50개씩 보기</a></li>
+				<li><a class="dropdown-item" href="#">100개씩 보기</a></li>
+			</ul>
+		</div>
+	
+		<table class="table table table-hover mt-1">
 		
 			<thead>
     			<tr>
@@ -22,7 +33,7 @@
  			
 			<tbody>
 				<th:block th:each="board, i : ${boardList}">
-					<tr th:onclick="@{|location.href='/board/board-detail-form/${board.board_id}'|}">
+					<tr th:onclick="@{|location.href='/board/board-detail-form/${board.board_id}'|}" style="cursor: pointer;">
 						<th scope="row" th:text="${i.count}">1</th>
 						<td th:text="${board.board_writer}">작성자</td>
 						<td th:text="${board.board_title}">제목</td>
@@ -32,9 +43,12 @@
 			</tbody>
 		</table>
 		
-		<div class="">
+		<div class="float-end">
 			<button class="btn btn-primary" th:onclick="|location.href='@{/board/board-write-form}'|">글 등록</button>
 		</div>
+		
+		<br/>
+		<br/>
 		
 		<nav aria-label="Page navigation example">
 			<ul class="pagination justify-content-center">
@@ -50,20 +64,31 @@
 			</ul>
 		</nav>
 		
-		<form class="d-flex px-5" role="search">
-			<select class="form-select flex-grow-0" aria-label="Default select example">
-				<option selected>제목</option>
-				<option value="1">One</option>
-				<option value="2">Two</option>
-				<option value="3">Three</option>
-			</select>
-			
-			<div class="input-group flex-grow-1">
-				<input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
-				<button class="btn btn-primary" type="button" id="button-addon2">Button</button>
-			</div>
-
-	    </form>
+		<div class="container">
+			<form class="d-flex px-5" role="search">
+				
+				<div class="col-md-3">
+					<select class="form-select" aria-label="Default select example">
+						<option selected>제목</option>
+						<option value="1">제목+내용</option>
+						<option value="2">내용</option>
+						<option value="3">작성자</option>
+					</select>
+				</div>
+				
+				<div class="col-md-9">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="검색 키워드를 입력해주세요." aria-label="Recipient's username" aria-describedby="button-addon2">
+						<button class="btn btn-primary" type="button" id="button-addon2">검색</button>
+					</div>
+				</div>
+				
+		    </form>
+		
+		</div>
+		
+	    <br/>
+	    <br/>
 		
 	</div>
 
