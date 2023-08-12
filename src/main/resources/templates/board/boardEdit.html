@@ -9,7 +9,7 @@
 	
 	<div class="container-sm mt-4">
 		
-		<form action="#" th:action="@{/board/board-edit/{board_id}(board_id=${board.board_id})}" method="post">
+		<form action="#" th:action="@{/board/board-edit/{id}(id=${board.id})}" method="post">
 			<input type="hidden" name="_method" value="put">
 			
 			<div class="mb-3">
@@ -57,7 +57,7 @@
 			
 			<div class="mb-3 float-end">
 				<input type="submit" value="수정하기" class="btn btn-info">			
-				<button class="btn btn-primary" th:onclick="|location.href='@{/board/board-edit-form/{board_id}(board_id=${board.board_id})}'|">취소</button>
+				<button class="btn btn-primary" th:onclick="|location.href='@{/board/board-edit-form/{id}(id=${board.id})}'|">취소</button>
 			</div>
 			
 		</form>
