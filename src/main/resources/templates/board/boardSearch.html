@@ -14,10 +14,10 @@
 			  5개씩 보기
 			</button>
 			<ul class="dropdown-menu">
-				<li><a class="dropdown-item" href="#" th:href="@{/board/board-list-form?size=5}">5개씩 보기</a></li>
-				<li><a class="dropdown-item" href="#" th:href="@{/board/board-list-form?size=10}">10개씩 보기</a></li>
-				<li><a class="dropdown-item" href="#" th:href="@{/board/board-list-form?size=50}">50개씩 보기</a></li>
-				<li><a class="dropdown-item" href="#" th:href="@{/board/board-list-form?size=100}">100개씩 보기</a></li>
+				<li><a class="dropdown-item" href="#" th:href="@{/board/board-search-form?size=5}">5개씩 보기</a></li>
+				<li><a class="dropdown-item" href="#" th:href="@{/board/board-search-form?size=10}">10개씩 보기</a></li>
+				<li><a class="dropdown-item" href="#" th:href="@{/board/board-search-form?size=50}">50개씩 보기</a></li>
+				<li><a class="dropdown-item" href="#" th:href="@{/board/board-search-form?size=100}">100개씩 보기</a></li>
 			</ul>
 		</div>
 	
@@ -72,17 +72,17 @@
 			<ul class="pagination justify-content-center">
 				
 				<li class="page-item" th:classappend="${startPage==1? ' disabled' : ' '}">
-					<a class="page-link" th:href="@{/board/board-list-form?size={size}&page={page}(size=${size}, page=${startPage-2})}">Previous</a>
+					<a class="page-link" th:href="@{/board/board-search-form?size={size}&page={page}(size=${size}, page=${startPage-2})}">Previous</a>
 				</li>
 				
 				<th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
 					<li class="page-item" th:classappend="${nowPage==page-1? ' active' : ' '}">
-						<a class="page-link" href="#" th:text="${page}" th:href="@{/board/board-list-form?size={size}&page={page}(size=${size}, page=${page-1})}">1</a>
+						<a class="page-link" href="#" th:text="${page}" th:href="@{/board/board-search-form?size={size}&page={page}(size=${size}, page=${page-1})}">1</a>
 					</li>
 				</th:block>
 				
 				<li class="page-item" th:classappend="${totalPages<=endPage? ' disabled' : ' '}">
-					<a class="page-link" href="#" th:href="@{/board/board-list-form?size={size}&page={page}(size=${size}, page=${endPage})}">Next</a>
+					<a class="page-link" href="#" th:href="@{/board/board-search-form?size={size}&page={page}(size=${size}, page=${endPage})}">Next</a>
 				</li>
 			</ul>
 		</nav>
@@ -128,20 +128,10 @@
 		
 		$.ajax({
 			type : "post",
-			url : "/board/board-search",
+			url : "/board/board-search-form",
 			data : "searchType="+searchType+"&searchKeyword="+searchKeyword,
-			datatype : "json",
-			success : function(data){
-				
-				
-				
-				for(var i=0; i<data.length; i++){
-					console.log(data[i].board_title);
-					
-					
-					
-				}
-				
+			success : function(result){
+				alert(result);
 			},
 			error : function(e){
 				alert("ajax 전송 실패");

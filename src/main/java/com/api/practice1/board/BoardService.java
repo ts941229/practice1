@@ -20,6 +20,10 @@ public class BoardService {
 		return boardRepository.findAll(pageable);
 	}
 	
+	public Page<Board> findAllByTitleContaining(String keyword, Pageable pageable){
+		return boardRepository.findAllByTitleContaining(keyword, pageable);
+	}
+	
 	public void save(Board board) {
 		boardRepository.save(board);
 	}
