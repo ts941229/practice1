@@ -79,7 +79,7 @@ public class BoardController {
 	@PostMapping("/board-search")
 	@ResponseBody
 	public List<Board> boardSearch(Model model
-												, @PageableDefault(page = 0, size = 5) Pageable pageable
+												, @PageableDefault(page = 0, size = 10) Pageable pageable
 												, @RequestParam(value = "size", required = false) Integer size
 												, @RequestParam(value = "page", required = false) Integer page
 												, @RequestParam(value = "searchType") String searchType

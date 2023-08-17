@@ -21,7 +21,7 @@
 			</ul>
 		</div>
 	
-		<table class="table table table-hover mt-1">
+		<table class="table table table-hover mt-1" id="board_list_table">
 	
 			<colgroup>
 				<col style="width: 10%">
@@ -88,7 +88,7 @@
 		</nav>
 		
 		<div class="container">
-			<form class="d-flex px-5" role="search">
+			<form class="d-flex px-5" role="search" onsubmit="return false">
 				
 				<div class="col-md-3">
 					<select class="form-select" aria-label="Default select example" id="searchType">
@@ -118,6 +118,17 @@
 </body>
 
 <script>
+	$(document).ready(function(){
+		$("#searchKeyword").keypress(function(e){
+			if(e.keyCode==13){
+				console.log("엔터키 누름");
+				console.log(e.keyCode);
+				searchList();
+			}
+		});
+		
+	});
+
 	function searchList(){
 		
 		var searchType = $("#searchType option:selected").val();
@@ -133,11 +144,19 @@
 			datatype : "json",
 			success : function(data){
 				
-				
+				$("#board_list_table tbody").empty();
 				
 				for(var i=0; i<data.length; i++){
-					console.log(data[i].board_title);
 					
+					$("#board_list_table tbody").html(
+						"<tr onclick="+"location.href='/board/board-detail-form/"+data[i].id+"'"+'"'+ "style='cursor: pointer;'>"
+							+"<th scope="+"row"+">"+(i+1)+"</th>"
+							+"<td>"+data[i].board_writer+"</td>"
+							+"<td>"+data[i].board_title+"</td>"
+							+"<td>"+data[i].board_date+"</td>"
+							+"<td>"+data[i].board_hit+"</td>"
+						+"</tr>"
+					);
 					
 					
 				}
