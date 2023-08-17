@@ -86,46 +86,19 @@ public class BoardController {
 												, @RequestParam(value = "searchKeyword") String searchKeyword) {
 		
 		if(page == null) {page = 0;} // default 페이지
-		if(size == null) {size = 5;}  // default 사이즈
+		if(size == null) {size = 10;}  // default 사이즈
 		
 		pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
 		
-		System.out.println("searchType : "+searchType);
-		System.out.println("searchKeyword : "+searchKeyword);
-
 		Page<Board> boardList = null;
 		
+		// 검색 타입별 분류
 		switch(searchType) {
 			case "title" : boardList = boardService.findAllByTitleContaining(searchKeyword, pageable); break;
-			case "titcont" : break;
-			case "content" : break;
-			case "writer" : break;
+			case "titcont" : boardList = boardService.findAllByTitleAndContentContaining(searchKeyword, pageable); break;
+			case "content" : boardList = boardService.findAllByContentContaining(searchKeyword, pageable); break;
+			case "writer" : boardList = boardService.findAllByWriterContaining(searchKeyword, pageable); break;
 		}
-		
-		System.out.println("list size : "+boardList.getContent().size());
-		
-		int pageSize = 5; // page 크기 ex) 1~5, 6~10 or 1~10, 11~20
-		int nowPage = boardList.getPageable().getPageNumber();
-		int startPage = Math.max((nowPage / pageSize) * pageSize + 1, 1);
-		int endPage = Math.min(startPage + pageSize - 1, boardList.getTotalPages());
-		int prev = startPage - pageSize;
-		int next = startPage + pageSize;
-		
-		// startPage가 endPage보다 높게 나올경우 (잘못된 접근시 발생할 수 있음 ex) n개씩 보기 클릭시)
-		if(startPage>=endPage) {startPage=Math.max(Math.min(endPage-pageSize, 1), 1);}
-		
-		// 데이터가 없는 경우
-		if(endPage<=0) {endPage=1;}
-		
-		model.addAttribute("boardList", boardList);
-		model.addAttribute("size", size);
-		model.addAttribute("totalPages", boardList.getTotalPages());
-		model.addAttribute("pageSize", pageSize);
-		model.addAttribute("nowPage", nowPage);
-		model.addAttribute("startPage", startPage);
-		model.addAttribute("endPage", endPage);
-		model.addAttribute("prev", prev);
-		model.addAttribute("next", next);
 		
 		return boardList.getContent();
 	}

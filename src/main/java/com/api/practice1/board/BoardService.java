@@ -24,6 +24,19 @@ public class BoardService {
 		return boardRepository.findAllByTitleContaining(keyword, pageable);
 	}
 	
+	public Page<Board> findAllByTitleAndContentContaining(String keyword, Pageable pageable){
+		return boardRepository.findAllByTitleAndContentContaining(keyword, pageable);
+	}
+	
+	public Page<Board> findAllByContentContaining(String keyword, Pageable pageable){
+		return boardRepository.findAllByContentContaining(keyword, pageable);
+	}
+	
+	public Page<Board> findAllByWriterContaining(String keyword, Pageable pageable){
+		return boardRepository.findAllByWriterContaining(keyword, pageable);
+	}
+	
+	
 	public void save(Board board) {
 		boardRepository.save(board);
 	}

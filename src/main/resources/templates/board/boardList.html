@@ -51,7 +51,7 @@
 				
 				<th:block th:each="board, i : ${boardList}">
 					<tr th:onclick="@{|location.href='/board/board-detail-form/${board.id}'|}" style="cursor: pointer;">
-						<th scope="row" th:text="${i.count}">1</th>
+						<th scope="row" th:text="${board.id}">1</th>
 						<td th:text="${board.board_writer}">작성자</td>
 						<td th:text="${board.board_title}">제목</td>
 						<td th:text="${board.board_date}">작성날짜</td>
@@ -121,9 +121,11 @@
 	$(document).ready(function(){
 		$("#searchKeyword").keypress(function(e){
 			if(e.keyCode==13){
-				console.log("엔터키 누름");
-				console.log(e.keyCode);
-				searchList();
+				if($("#searchKeyword").val()==''){
+					// 검색 키워드 입력 안할시
+				}else{
+					searchList();
+				}
 			}
 		});
 		
@@ -134,10 +136,7 @@
 		var searchType = $("#searchType option:selected").val();
 		var searchKeyword = $("#searchKeyword").val();
 		
-		console.log(searchType);
-		console.log(searchKeyword);
-		
-		$.ajax({
+		$.ajax({	
 			type : "post",
 			url : "/board/board-search",
 			data : "searchType="+searchType+"&searchKeyword="+searchKeyword,
@@ -146,26 +145,25 @@
 				
 				$("#board_list_table tbody").empty();
 				
-				for(var i=0; i<data.length; i++){
+				if(data.length<=0){
+					$("#board_list_table tbody").html("<tr><td colspan='5' align='center'>데이터가 없습니다.</td></tr>");
+				}else{
 					
-					$("#board_list_table tbody").html(
-						"<tr onclick="+"location.href='/board/board-detail-form/"+data[i].id+"'"+'"'+ "style='cursor: pointer;'>"
-							+"<th scope="+"row"+">"+(i+1)+"</th>"
-							+"<td>"+data[i].board_writer+"</td>"
-							+"<td>"+data[i].board_title+"</td>"
-							+"<td>"+data[i].board_date+"</td>"
-							+"<td>"+data[i].board_hit+"</td>"
-						+"</tr>"
-					);
-					
-					
+					for(var i=0; i<data.length; i++){
+						
+						$("#board_list_table tbody").append(
+							"<tr onclick=\"location.href='/board/board-detail-form/"+data[i].id+"'\" "+"style='cursor: pointer;'>"
+								+"<th scope="+"row"+">"+data[i].id+"</th>"
+								+"<td>"+data[i].board_writer+"</td>"
+								+"<td>"+data[i].board_title+"</td>"
+								+"<td>"+data[i].board_date+"</td>"
+								+"<td>"+data[i].board_hit+"</td>"
+							+"</tr>"
+						);
+					}
 				}
-				
 			},
-			error : function(e){
-				alert("ajax 전송 실패");
-			}
-			
+			error : function(e){alert("ajax 전송 실패");}
 		});
 		
 	}
