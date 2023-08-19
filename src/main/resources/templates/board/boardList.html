@@ -14,10 +14,10 @@
 			  5개씩 보기
 			</button>
 			<ul class="dropdown-menu">
-				<li><a class="dropdown-item" href="#" th:href="@{/board/board-list-form?size=5}">5개씩 보기</a></li>
-				<li><a class="dropdown-item" href="#" th:href="@{/board/board-list-form?size=10}">10개씩 보기</a></li>
-				<li><a class="dropdown-item" href="#" th:href="@{/board/board-list-form?size=50}">50개씩 보기</a></li>
-				<li><a class="dropdown-item" href="#" th:href="@{/board/board-list-form?size=100}">100개씩 보기</a></li>
+				<li><a class="dropdown-item" href="#" th:href="@{/board/board-list-form?size=5&searchType={searchType}&searchKeyword={searchKeyword}(searchType=${searchType},searchKeyword=${searchKeyword})}">5개씩 보기</a></li>
+				<li><a class="dropdown-item" href="#" th:href="@{/board/board-list-form?size=10&searchType={searchType}&searchKeyword={searchKeyword}(searchType=${searchType},searchKeyword=${searchKeyword})}">10개씩 보기</a></li>
+				<li><a class="dropdown-item" href="#" th:href="@{/board/board-list-form?size=50&searchType={searchType}&searchKeyword={searchKeyword}(searchType=${searchType},searchKeyword=${searchKeyword})}">50개씩 보기</a></li>
+				<li><a class="dropdown-item" href="#" th:href="@{/board/board-list-form?size=100&searchType={searchType}&searchKeyword={searchKeyword}(searchType=${searchType},searchKeyword=${searchKeyword})}">100개씩 보기</a></li>
 			</ul>
 		</div>
 	
@@ -72,26 +72,27 @@
 			<ul class="pagination justify-content-center">
 				
 				<li class="page-item" th:classappend="${startPage==1? ' disabled' : ' '}">
-					<a class="page-link" th:href="@{/board/board-list-form?size={size}&page={page}(size=${size}, page=${startPage-2})}">Previous</a>
+					<a class="page-link" th:href="@{/board/board-list-form?size={size}&page={page}&searchType={searchType}&searchKeyword={searchKeyword}(size=${size}, page=${startPage-2}, searchType=${searchType}, searchKeyword=${searchKeyword})}">Previous</a>
 				</li>
 				
 				<th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
 					<li class="page-item" th:classappend="${nowPage==page-1? ' active' : ' '}">
-						<a class="page-link" href="#" th:text="${page}" th:href="@{/board/board-list-form?size={size}&page={page}(size=${size}, page=${page-1})}">1</a>
+						<a class="page-link" href="#" th:text="${page}" th:href="@{/board/board-list-form?size={size}&page={page}&searchType={searchType}&searchKeyword={searchKeyword}(size=${size}, page=${page-1}, searchType=${searchType}, searchKeyword=${searchKeyword})}">1</a>
 					</li>
 				</th:block>
 				
 				<li class="page-item" th:classappend="${totalPages<=endPage? ' disabled' : ' '}">
-					<a class="page-link" href="#" th:href="@{/board/board-list-form?size={size}&page={page}(size=${size}, page=${endPage})}">Next</a>
+					<a class="page-link" href="#" th:href="@{/board/board-list-form?size={size}&page={page}&searchType={searchType}&searchKeyword={searchKeyword}(size=${size}, page=${endPage}, searchType=${searchType}, searchKeyword=${searchKeyword})}">Next</a>
 				</li>
 			</ul>
 		</nav>
 		
 		<div class="container">
-			<form class="d-flex px-5" role="search" onsubmit="return false">
-				
+			<form class="d-flex px-5" id="searchForm" role="search" action="/board/board-list-form" method="get">
+				<input type="hidden" name="size" th:value="${size}">
+
 				<div class="col-md-3">
-					<select class="form-select" aria-label="Default select example" id="searchType">
+					<select class="form-select" aria-label="Default select example" id="searchType" name="searchType">
 						<option value="title" selected>제목</option>
 						<option value="titcont">제목+내용</option>
 						<option value="content">내용</option>
@@ -101,9 +102,9 @@
 				
 				<div class="col-md-9">
 					<div class="input-group">
-						<input type="text" class="form-control" id="searchKeyword" placeholder="검색 키워드를 입력해주세요." aria-label="Recipient's username" aria-describedby="button-addon2">
-						<button class="btn btn-primary" type="button" id="button-addon2" onclick="searchList();">검색</button>
-					</div>
+						<input type="text" class="form-control" id="searchKeyword" name="searchKeyword" placeholder="검색 키워드를 입력해주세요." aria-label="Recipient's username" aria-describedby="button-addon2" th:value="${searchKeyword}">
+						<button class="btn btn-primary" type="button" id="button-addon2">검색</button>
+					</div> 
 				</div>
 				
 		    </form>
@@ -118,7 +119,32 @@
 </body>
 
 <script>
+	
 	$(document).ready(function(){
+		
+		// 검색창 포커싱
+		$("#searchKeyword").on("focus", function() {
+	        var currentValue = $(this).val();
+	        $(this).val("").val(currentValue);
+	    });
+		$("#searchKeyword").focus();
+
+		// 엔터키 입력시
+		$("#searchKeyword").keypress(function(e){
+			if(e.keyCode==13){
+				e.preventDefault();
+				if($("#searchKeyword").val()==''){
+					// 검색 키워드 입력 안할시
+				}else{
+					$("#searchForm").submit();
+				}
+			}
+		});
+		
+	});
+	
+	// 검색기능 비동기 작동
+	/* $(document).ready(function(){
 		$("#searchKeyword").keypress(function(e){
 			if(e.keyCode==13){
 				if($("#searchKeyword").val()==''){
@@ -166,7 +192,7 @@
 			error : function(e){alert("ajax 전송 실패");}
 		});
 		
-	}
+	} */
 
 </script>
 

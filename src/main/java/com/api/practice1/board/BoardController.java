@@ -38,16 +38,36 @@ public class BoardController {
 	// 게시글 리스트 페이지
 	@GetMapping("/board-list-form")
 	public String boardListForm(Model model
-											, @PageableDefault(page = 0, size = 5) Pageable pageable
+											, @PageableDefault(page = 0, size = 10) Pageable pageable
 											, @RequestParam(value = "size", required = false) Integer size
-											, @RequestParam(value = "page", required = false) Integer page) {
+											, @RequestParam(value = "page", required = false) Integer page
+											, @RequestParam(value = "searchType", required = false) String searchType
+											, @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
 	
 		if(page == null) {page = 0;} // default 페이지
-		if(size == null) {size = 5;}  // default 사이즈
+		if(size == null) {size = 10;}  // default 사이즈
 		
 		pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
 		
-		Page<Board> boardList = boardService.findAll(pageable);
+		Page<Board> boardList = null;
+		
+		System.out.println("searchType : "+searchType);
+		System.out.println("searchKeyword : "+searchKeyword);
+		
+		
+		// 검색시
+		if((searchType!=null && !searchType.isBlank()) || (searchKeyword!=null && !searchKeyword.isBlank())) {
+			
+			switch(searchType) {
+				case "title" : boardList = boardService.findAllByTitleContaining(searchKeyword, pageable); break;
+				case "titcont" : boardList = boardService.findAllByTitleAndContentContaining(searchKeyword, pageable); break;
+				case "content" : boardList = boardService.findAllByContentContaining(searchKeyword, pageable); break;
+				case "writer" : boardList = boardService.findAllByWriterContaining(searchKeyword, pageable); break;
+			}
+			
+		}else {
+			boardList = boardService.findAll(pageable); // 검색 x
+		}
 		
 		int pageSize = 5; // page 크기 ex) 1~5, 6~10 or 1~10, 11~20
 		int nowPage = boardList.getPageable().getPageNumber();
@@ -71,36 +91,10 @@ public class BoardController {
 		model.addAttribute("endPage", endPage);
 		model.addAttribute("prev", prev);
 		model.addAttribute("next", next);
+		model.addAttribute("searchType", searchType);
+		model.addAttribute("searchKeyword", searchKeyword);
 		
 		return "/board/boardList";
-	}
-	
-	// 게시글 검색
-	@PostMapping("/board-search")
-	@ResponseBody
-	public List<Board> boardSearch(Model model
-												, @PageableDefault(page = 0, size = 10) Pageable pageable
-												, @RequestParam(value = "size", required = false) Integer size
-												, @RequestParam(value = "page", required = false) Integer page
-												, @RequestParam(value = "searchType") String searchType
-												, @RequestParam(value = "searchKeyword") String searchKeyword) {
-		
-		if(page == null) {page = 0;} // default 페이지
-		if(size == null) {size = 10;}  // default 사이즈
-		
-		pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
-		
-		Page<Board> boardList = null;
-		
-		// 검색 타입별 분류
-		switch(searchType) {
-			case "title" : boardList = boardService.findAllByTitleContaining(searchKeyword, pageable); break;
-			case "titcont" : boardList = boardService.findAllByTitleAndContentContaining(searchKeyword, pageable); break;
-			case "content" : boardList = boardService.findAllByContentContaining(searchKeyword, pageable); break;
-			case "writer" : boardList = boardService.findAllByWriterContaining(searchKeyword, pageable); break;
-		}
-		
-		return boardList.getContent();
 	}
 	
 	// 글쓰기 페이지
