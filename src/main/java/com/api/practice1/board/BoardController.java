@@ -3,6 +3,8 @@ package com.api.practice1.board;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.api.practice1.global.Util;
 
@@ -50,10 +54,6 @@ public class BoardController {
 		pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
 		
 		Page<Board> boardList = null;
-		
-		System.out.println("searchType : "+searchType);
-		System.out.println("searchKeyword : "+searchKeyword);
-		
 		
 		// 검색시
 		if((searchType!=null && !searchType.isBlank()) || (searchKeyword!=null && !searchKeyword.isBlank())) {
@@ -99,25 +99,30 @@ public class BoardController {
 	
 	// 글쓰기 페이지
 	@GetMapping("/board-write-form")
-	public String boardWriteForm() {
-		
+	public String boardWriteForm(Model model) {
+		model.addAttribute("boardDTO", new BoardDTO());
 		return "/board/boardWrite";
 	}
 	
 	@PostMapping("/board-write")
-	public String boardWrite(@ModelAttribute BoardDTO boardDTO) {
+	public String boardWrite(@ModelAttribute @Valid BoardDTO boardDTO, BindingResult result) {
 		
-		Board board = Board.builder()
-										.board_title(boardDTO.getBoard_title())
-										.board_writer(boardDTO.getBoard_writer())
-										.board_content(boardDTO.getBoard_content())
-										.board_category(boardDTO.getBoard_category())
-										.board_date(Util.getInstance().dateFormat(new Date()))
-										.board_hit(boardDTO.getBoard_hit())
-										.board_like(boardDTO.getBoard_like())
-										.build();
+		if(result.hasErrors()) {
+			return "/board/boardWrite";
+		}else {
+			Board board = Board.builder()
+					.board_title(boardDTO.getBoard_title())
+					.board_writer(boardDTO.getBoard_writer())
+					.board_content(boardDTO.getBoard_content())
+					.board_category(boardDTO.getBoard_category())
+					.board_date(Util.getInstance().dateFormat(new Date()))
+					.board_hit(boardDTO.getBoard_hit())
+					.board_like(boardDTO.getBoard_like())
+					.build();
+			
+			boardService.save(board);
+		}
 		
-		boardService.save(board);
 		
 		return "redirect:/board/board-list-form";
 	}
