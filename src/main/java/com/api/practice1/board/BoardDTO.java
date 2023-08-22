@@ -13,7 +13,7 @@ public class BoardDTO {
 	private Long id;
 
 	@NotBlank(message = "제목을 입력해주세요.")
-	@Size(min = 2, message = "제목은 두글자 이상 입력해주세요.")
+	//@Size(min = 2, message = "제목은 두글자 이상 입력해주세요.")
 	private String board_title;
 	
 	private String board_writer;

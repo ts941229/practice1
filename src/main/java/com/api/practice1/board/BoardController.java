@@ -108,6 +108,8 @@ public class BoardController {
 	public String boardWrite(@ModelAttribute @Valid BoardDTO boardDTO, BindingResult result) {
 		
 		if(result.hasErrors()) {
+			
+			
 			return "/board/boardWrite";
 		}else {
 			Board board = Board.builder()
