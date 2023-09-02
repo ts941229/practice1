@@ -11,8 +11,12 @@ public class MemberController {
 	@GetMapping("/member-regist-form")
 	public String memberRegistForm() {
 		
-		System.out.println("member regist form");
-		
 		return "/member/memberRegist";
+	}
+	
+	@GetMapping("/member-login-form")
+	public String memberLoginForm() {
+		
+		return "/member/memberLogin";
 	}
 }

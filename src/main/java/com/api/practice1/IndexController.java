@@ -11,4 +11,9 @@ public class IndexController {
 		return "/main/index";
 	}
 	
+	@GetMapping("/test/test")
+	public String testPage() {
+		return "/main/test";
+	}
+	
 }
