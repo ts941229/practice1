@@ -109,7 +109,6 @@ public class BoardController {
 		
 		if(result.hasErrors()) {
 			
-			
 			return "/board/boardWrite";
 		}else {
 			Board board = Board.builder()
