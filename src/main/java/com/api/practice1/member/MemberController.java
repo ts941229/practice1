@@ -5,10 +5,12 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.api.practice1.global.Util;
 
@@ -54,7 +56,13 @@ public class MemberController {
 	}
 	
 	@GetMapping("/member-login-form")
-	public String memberLoginForm() {
+	public String memberLoginForm(@RequestParam(value = "error", required = false) String error
+													, @RequestParam(value = "exception", required = false) String exception
+													, Model model) {
+		
+		model.addAttribute("error", error);
+		model.addAttribute("exception", exception);
+		
 		return "/member/memberLogin";
 	}
 	

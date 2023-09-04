@@ -19,6 +19,10 @@ public class SecurityConfig {
 		return new BCryptPasswordEncoder();
 	}
 	
+	@Bean
+	public LoginFailHandler loginFailHandler() {
+		return new LoginFailHandler();
+	}
 	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -35,8 +39,9 @@ public class SecurityConfig {
 						.formLogin()
 						.loginPage("/member/member-login-form") // 로그인 필요시 해당 페이지로 이동시킴
 						.loginProcessingUrl("/member/member-login") // login 호출시 시큐리티가 낚아 채서 로그인 진행
-						.usernameParameter("member_name") // username 파라미터 (default : username) 파라미터 name값이 username이 아닌경우 설정해줘야함
+						.usernameParameter("member_email") // username 파라미터 (default : username) 파라미터 name값이 username이 아닌경우 설정해줘야함
 						.defaultSuccessUrl("/") // 로그인 완료시 갈 페이지
+						.failureHandler(loginFailHandler()) // 로그인 실패시 실패 핸들링
 						.and()
 						.build();
 	}

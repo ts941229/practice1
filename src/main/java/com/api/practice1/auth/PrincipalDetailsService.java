@@ -23,12 +23,13 @@ public class PrincipalDetailsService implements UserDetailsService{
 		
 		System.out.println("username : "+username);
 		
-		Member member = memberRepository.findByMembername(username);
+		Member member = memberRepository.findByMemberemail(username);
 		if(member!=null) {
+			System.out.println("member_password : "+member.getMember_password());
 			return new PrincipalDetails(member);
+		}else {
+			return null;
 		}
-		
-		return null;
 	}
 
 }

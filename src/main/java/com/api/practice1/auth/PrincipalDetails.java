@@ -28,11 +28,12 @@ public class PrincipalDetails implements UserDetails{
 	// 해당 유저의 권한을 리턴하는 곳
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		Collection<GrantedAuthority> collect = new ArrayList<GrantedAuthority>();
+		Collection<GrantedAuthority> collect = new ArrayList<>();
 		
 		collect.add(new GrantedAuthority() {
 			@Override
 			public String getAuthority() {
+				System.out.println("member_role : "+member.getMember_role());
 				return member.getMember_role();
 			}
 		});
@@ -47,7 +48,7 @@ public class PrincipalDetails implements UserDetails{
 
 	@Override
 	public String getUsername() {
-		return member.getMember_name();
+		return member.getMember_email();
 	}
 
 	@Override
