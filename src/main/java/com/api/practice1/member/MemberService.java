@@ -16,8 +16,8 @@ public class MemberService {
 		memberRepository.save(member);
 	}
 	
-	public Member findByMemberemail(String member_email) {
-		return memberRepository.findByMemberemail(member_email);
+	public Member findByMemberemail(String email) {
+		return memberRepository.findByMemberemail(email);
 	}
 	
 }

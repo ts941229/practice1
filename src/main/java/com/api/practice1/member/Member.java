@@ -18,24 +18,23 @@ import lombok.NoArgsConstructor;
 public class Member {
 
 	@Builder(toBuilder = true)
-	protected Member(long id, String member_email, String member_password, String member_name, String member_role,
-			String member_create_date) {
+	protected Member(long id, String email, String password, String name, String role, String create_date) {
 		super();
 		this.id = id;
-		this.member_email = member_email;
-		this.member_password = member_password;
-		this.member_name = member_name;
-		this.member_role = member_role;
-		this.member_create_date = member_create_date;
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.role = role;
+		this.create_date = create_date;
 	}
 	
 	@Id
 	@GeneratedValue(generator = "member_seq_generater", strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	private String member_email;
-	private String member_password;
-	private String member_name;
-	private String member_role;
-	private String member_create_date;
+	private String email;
+	private String password;
+	private String name;
+	private String role;
+	private String create_date;
 }

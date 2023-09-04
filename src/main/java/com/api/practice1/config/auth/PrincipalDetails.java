@@ -1,4 +1,4 @@
-package com.api.practice1.auth;
+package com.api.practice1.config.auth;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,8 +33,8 @@ public class PrincipalDetails implements UserDetails{
 		collect.add(new GrantedAuthority() {
 			@Override
 			public String getAuthority() {
-				System.out.println("member_role : "+member.getMember_role());
-				return member.getMember_role();
+				System.out.println("member_role : "+member.getRole());
+				return member.getRole();
 			}
 		});
 		
@@ -43,12 +43,12 @@ public class PrincipalDetails implements UserDetails{
 
 	@Override
 	public String getPassword() {
-		return member.getMember_password();
+		return member.getPassword();
 	}
-
+	
 	@Override
 	public String getUsername() {
-		return member.getMember_email();
+		return member.getEmail();
 	}
 
 	@Override

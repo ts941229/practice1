@@ -12,30 +12,30 @@
 		<form action="/board/board-write" method="post" th:object="${boardDTO}">
 			<div class="mb-3">
 				<label for="exampleFormControlInput1" class="form-label">카테고리</label>
-				<select class="form-select" aria-label="Default select example" id="board_category" name="board_category">
+				<select class="form-select" aria-label="Default select example" id="category" name="category">
 					<option value="">카테고리를 선택해주세요.</option>
 					<option value="카테고리1">카테고리1</option>
 					<option value="카테고리2">카테고리2</option>
 					<option value="카테고리3">카테고리3</option>
 				</select>
-				<p th:if="${#fields.hasErrors('board_category')}" th:errors="*{board_category}" style="color: red"></p>
+				<p th:if="${#fields.hasErrors('category')}" th:errors="*{category}" style="color: red"></p>
 			</div>
 			
 			<div class="mb-3">
 				<label for="exampleFormControlInput1" class="form-label">글쓴이</label>
-				<input type="text" class="form-control" id="exampleFormControlInput1" name="board_writer" placeholder="이름을 입력해주세요.">
+				<input type="text" class="form-control" id="exampleFormControlInput1" name="writer" placeholder="이름을 입력해주세요.">
 			</div>
 			
 			<div class="mb-3">
 				<label for="exampleFormControlInput1" class="form-label">제목</label>
-				<input type="text" class="form-control" id="exampleFormControlInput1" name="board_title" placeholder="제목을 입력해주세요." th:value="${boardDTO.board_title}">
-				<p th:if="${#fields.hasErrors('board_title')}" th:errors="*{board_title}" style="color: red"></p>
+				<input type="text" class="form-control" id="exampleFormControlInput1" name="title" placeholder="제목을 입력해주세요." th:value="${boardDTO.title}">
+				<p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color: red"></p>
 			</div>
 			
 			<div class="mb-3">
 				<label for="exampleFormControlTextarea1" class="form-label">본문</label>
-				<textarea class="form-control" id="exampleFormControlTextarea1" name="board_content" rows="5" th:text="${boardDTO.board_content}"></textarea>
-				<p th:if="${#fields.hasErrors('board_content')}" th:errors="*{board_content}" style="color: red"></p>
+				<textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="5" th:text="${boardDTO.content}"></textarea>
+				<p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" style="color: red"></p>
 			</div>
 			
 			<div class="mb-3 float-end">
@@ -51,8 +51,8 @@
 </body>
 <script th:inline="javascript">
 	$(document).ready(function(){
-		var board_category = [[${boardDTO.board_category}]];
-		$("#board_category").val(board_category).prop("selected", true);
+		var category = [[${boardDTO.category}]];
+		$("#category").val(category).prop("selected", true);
 	});
 </script>
 

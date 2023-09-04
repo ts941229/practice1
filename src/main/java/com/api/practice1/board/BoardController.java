@@ -112,13 +112,13 @@ public class BoardController {
 			return "/board/boardWrite";
 		}else {
 			Board board = Board.builder()
-					.board_title(boardDTO.getBoard_title())
-					.board_writer(boardDTO.getBoard_writer())
-					.board_content(boardDTO.getBoard_content())
-					.board_category(boardDTO.getBoard_category())
-					.board_date(Util.getInstance().dateFormat(new Date()))
-					.board_hit(boardDTO.getBoard_hit())
-					.board_like(boardDTO.getBoard_like())
+					.title(boardDTO.getTitle())
+					.writer(boardDTO.getWriter())
+					.content(boardDTO.getContent())
+					.category(boardDTO.getCategory())
+					.create_date(Util.getInstance().dateFormat(new Date()))
+					.hit(boardDTO.getHit())
+					.heart(boardDTO.getHeart())
 					.build();
 			
 			boardService.save(board);
@@ -154,14 +154,14 @@ public class BoardController {
 		
 		Board board = Board.builder()
 										.id(id)
-										.board_category(boardDTO.getBoard_category())
-										.board_title(boardDTO.getBoard_title())
-										.board_writer(pre_board.getBoard_writer())
-										.board_content(boardDTO.getBoard_content())
+										.category(boardDTO.getCategory())
+										.title(boardDTO.getTitle())
+										.writer(pre_board.getWriter())
+										.content(boardDTO.getContent())
 										.updated_date(Util.getInstance().dateFormat(new Date()))
-										.board_date(pre_board.getBoard_date())
-										.board_like(pre_board.getBoard_like())
-										.board_hit(pre_board.getBoard_hit())
+										.create_date(pre_board.getCreate_date())
+										.heart(pre_board.getHeart())
+										.hit(pre_board.getHit())
 										.build();
 		boardService.save(board);
 		

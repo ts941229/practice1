@@ -14,19 +14,19 @@ public class BoardDTO {
 
 	@NotBlank(message = "제목을 입력해주세요.")
 	//@Size(min = 2, message = "제목은 두글자 이상 입력해주세요.")
-	private String board_title;
+	private String title;
 	
-	private String board_writer;
+	private String writer;
 
 	@NotBlank(message = "내용을 작성해주세요.")
-	private String board_content;
+	private String content;
 	
-	private String board_date;
+	private String create_date;
 	private String updated_date;
-	private int board_hit;
-	private int board_like;
+	private int hit;
+	private int heart;
 	
 	@NotBlank(message = "카테고리를 선택해주세요.")
-	private String board_category;
+	private String category;
 	
 }

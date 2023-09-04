@@ -21,30 +21,30 @@ import lombok.NoArgsConstructor;
 public class Board {
 	
 	@Builder(toBuilder = true)
-	protected Board(Long id, String board_title, String board_writer, String board_content, String board_date,
-			String updated_date, int board_hit, int board_like, String board_category) {
+	protected Board(Long id, String title, String writer, String content, String create_date, String updated_date,
+			int hit, int heart, String category) {
 		super();
 		this.id = id;
-		this.board_title = board_title;
-		this.board_writer = board_writer;
-		this.board_content = board_content;
-		this.board_date = board_date;
+		this.title = title;
+		this.writer = writer;
+		this.content = content;
+		this.create_date = create_date;
 		this.updated_date = updated_date;
-		this.board_hit = board_hit;
-		this.board_like = board_like;
-		this.board_category = board_category;
+		this.hit = hit;
+		this.heart = heart;
+		this.category = category;
 	}
 	
 	@Id
 	@GeneratedValue(generator = "board_seq_generator", strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String board_title;
-	private String board_writer;
-	private String board_content;
-	private String board_date;
+	private String title;
+	private String writer;
+	private String content;
+	private String create_date;
 	private String updated_date;
-	private int board_hit;
-	private int board_like;
-	private String board_category;
+	private int hit;
+	private int heart;
+	private String category;
 }

@@ -8,10 +8,10 @@ import lombok.Setter;
 public class MemberDTO {
 	
 	private long id;
-	private String member_email;
-	private String member_password;
-	private String member_name;
-	private String member_role;
-	private String member_create_date;
+	private String email;
+	private String password;
+	private String name;
+	private String role;
+	private String create_date;
 	
 }

@@ -1,4 +1,4 @@
-package com.api.practice1.auth;
+package com.api.practice1.config.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,11 +21,8 @@ public class PrincipalDetailsService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		System.out.println("username : "+username);
-		
 		Member member = memberRepository.findByMemberemail(username);
 		if(member!=null) {
-			System.out.println("member_password : "+member.getMember_password());
 			return new PrincipalDetails(member);
 		}else {
 			return null;

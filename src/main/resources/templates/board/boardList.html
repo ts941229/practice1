@@ -45,7 +45,7 @@
 			</ul>
 		</div>
 	
-		<table class="table table table-hover mt-1" id="board_list_table">
+		<table class="table table table-hover mt-1" id="list_table">
 	
 			<colgroup>
 				<col style="width: 10%">
@@ -76,10 +76,10 @@
 				<th:block th:each="board, i : ${boardList}">
 					<tr th:onclick="@{|location.href='/board/board-detail-form/${board.id}'|}" style="cursor: pointer;">
 						<th scope="row" th:text="${board.id}">1</th>
-						<td th:text="${board.board_writer}">작성자</td>
-						<td th:text="${board.board_title}">제목</td>
-						<td th:text="${board.board_date}">작성날짜</td>
-						<td th:text="${board.board_hit}">조회수</td>
+						<td th:text="${board.writer}">작성자</td>
+						<td th:text="${board.title}">제목</td>
+						<td th:text="${board.create_date}">작성날짜</td>
+						<td th:text="${board.hit}">조회수</td>
 					</tr>
 				</th:block>
 			</tbody>
@@ -169,21 +169,21 @@
 			datatype : "json",
 			success : function(data){
 				
-				$("#board_list_table tbody").empty();
+				$("#list_table tbody").empty();
 				
 				if(data.length<=0){
-					$("#board_list_table tbody").html("<tr><td colspan='5' align='center'>데이터가 없습니다.</td></tr>");
+					$("#list_table tbody").html("<tr><td colspan='5' align='center'>데이터가 없습니다.</td></tr>");
 				}else{
 					
 					for(var i=0; i<data.length; i++){
 						
-						$("#board_list_table tbody").append(
+						$("#list_table tbody").append(
 							"<tr onclick=\"location.href='/board/board-detail-form/"+data[i].id+"'\" "+"style='cursor: pointer;'>"
 								+"<th scope="+"row"+">"+data[i].id+"</th>"
-								+"<td>"+data[i].board_writer+"</td>"
-								+"<td>"+data[i].board_title+"</td>"
-								+"<td>"+data[i].board_date+"</td>"
-								+"<td>"+data[i].board_hit+"</td>"
+								+"<td>"+data[i].writer+"</td>"
+								+"<td>"+data[i].title+"</td>"
+								+"<td>"+data[i].create_date+"</td>"
+								+"<td>"+data[i].hit+"</td>"
 							+"</tr>"
 						);
 					}

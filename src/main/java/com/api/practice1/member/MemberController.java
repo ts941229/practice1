@@ -3,6 +3,7 @@ package com.api.practice1.member;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.api.practice1.global.Util;
 
@@ -35,19 +37,19 @@ public class MemberController {
 	@PostMapping("/member-regist")
 	public String memberRegist(@ModelAttribute MemberDTO memberDTO) {
 		
-		String rawPw = memberDTO.getMember_password();
+		String rawPw = memberDTO.getPassword();
 		String encodedPw = bCryptPasswordEncoder.encode(rawPw);
 		String role = "ROLE_MEMBER";
 
 		// admin일 경우
-		if(memberDTO.getMember_email().equals("admin")) {role = "ROLE_ADMIN";}
+		if(memberDTO.getEmail().equals("admin")) {role = "ROLE_ADMIN";}
 		
 		Member member = Member.builder()
-												.member_email(memberDTO.getMember_email())
-												.member_name(memberDTO.getMember_name())
-												.member_password(encodedPw)
-												.member_role(role)
-												.member_create_date(Util.getInstance().dateFormat(new Date()))
+												.email(memberDTO.getEmail())
+												.name(memberDTO.getName())
+												.password(encodedPw)
+												.role(role)
+												.create_date(Util.getInstance().dateFormat(new Date()))
 												.build();
 
 		memberService.save(member);
@@ -64,6 +66,12 @@ public class MemberController {
 		model.addAttribute("exception", exception);
 		
 		return "/member/memberLogin";
+	}
+	
+	@Secured("ROLE_ADMIN")
+	@GetMapping("/test")
+	public @ResponseBody String test() {
+		return "admin 이시군요!";
 	}
 	
 }
