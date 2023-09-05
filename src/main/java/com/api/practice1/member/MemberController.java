@@ -4,6 +4,9 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -71,6 +74,14 @@ public class MemberController {
 	@Secured("ROLE_ADMIN")
 	@GetMapping("/test")
 	public @ResponseBody String test() {
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		
+		System.out.println("email : "+userDetails.getUsername());
+		System.out.println("password : "+userDetails.getPassword());
+		System.out.println("role : "+userDetails.getAuthorities());
+		
 		return "admin 이시군요!";
 	}
 	
