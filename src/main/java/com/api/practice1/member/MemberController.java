@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.api.practice1.config.auth.PrincipalDetails;
 import com.api.practice1.global.Util;
 
 import lombok.RequiredArgsConstructor;
@@ -71,16 +73,11 @@ public class MemberController {
 		return "/member/memberLogin";
 	}
 	
-	@Secured("ROLE_ADMIN")
+//	@Secured("ROLE_ADMIN")
 	@GetMapping("/test")
-	public @ResponseBody String test() {
+	public @ResponseBody String test(@AuthenticationPrincipal PrincipalDetails principalDetails) {
 		
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		
-		System.out.println("email : "+userDetails.getUsername());
-		System.out.println("password : "+userDetails.getPassword());
-		System.out.println("role : "+userDetails.getAuthorities());
+		System.out.println("member : "+principalDetails.toString());
 		
 		return "admin 이시군요!";
 	}

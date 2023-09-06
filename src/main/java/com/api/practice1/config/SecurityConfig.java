@@ -8,9 +8,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
 import com.api.practice1.config.oauth.PrincipalOauth2UserService;
 
@@ -21,11 +23,6 @@ public class SecurityConfig {
 	
 	@Autowired
 	PrincipalOauth2UserService principalOauth2UserService;
-	
-	@Bean
-	public BCryptPasswordEncoder encodePw() {
-		return new BCryptPasswordEncoder();
-	}
 	
 	@Bean
 	public LoginFailHandler loginFailHandler() {
@@ -57,6 +54,13 @@ public class SecurityConfig {
 							.userInfoEndpoint()
 							.userService(principalOauth2UserService);
 		
+		httpSecurity.logout()
+							.addLogoutHandler(new SecurityContextLogoutHandler())
+							.logoutSuccessUrl("/") // 로그아웃 후 리디렉션 url
+							.invalidateHttpSession(true) // 세션 무효화
+							.deleteCookies("JSESSIONID") // 쿠키 삭제
+							.permitAll();
+							
 		return httpSecurity.build();
 	}
 	

@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class Member {
 
 	@Builder(toBuilder = true)
-	protected Member(long id, String email, String password, String name, String role, String create_date) {
+	protected Member(long id, String email, String password, String name, String role, String create_date, String provider, String provider_id) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -26,6 +26,8 @@ public class Member {
 		this.name = name;
 		this.role = role;
 		this.create_date = create_date;
+		this.provider = provider;
+		this.provider_id = provider_id;
 	}
 	
 	@Id
@@ -37,4 +39,7 @@ public class Member {
 	private String name;
 	private String role;
 	private String create_date;
+	private String provider;
+	private String provider_id;
+	
 }
