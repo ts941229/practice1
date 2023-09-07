@@ -79,7 +79,7 @@ public class MemberController {
 		
 		System.out.println("member : "+principalDetails.toString());
 		
-		return "admin 이시군요!";
+		return "로그인 성공!";
 	}
 	
 }

@@ -1,6 +1,7 @@
 package com.api.practice1.config.oauth;
 
 import java.util.Date;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 import com.api.practice1.config.auth.PrincipalDetails;
 import com.api.practice1.config.oauth.provider.FacebookUserInfo;
 import com.api.practice1.config.oauth.provider.GoogleUserInfo;
+import com.api.practice1.config.oauth.provider.KakaoUserInfo;
+import com.api.practice1.config.oauth.provider.NaverUserInfo;
 import com.api.practice1.config.oauth.provider.OAuth2UserInfo;
 import com.api.practice1.global.Util;
 import com.api.practice1.member.Member;
@@ -34,6 +37,8 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService{
 		OAuth2User oAuth2User = super.loadUser(userRequest);
 		
 		OAuth2UserInfo oAuth2UserInfo = null;
+
+		System.out.println("getAttributes : "+oAuth2User.getAttributes());
 		
 		if(userRequest.getClientRegistration().getRegistrationId().equals("google")) {
 			// 구글 로그인시
@@ -41,6 +46,14 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService{
 		}else if(userRequest.getClientRegistration().getRegistrationId().equals("facebook")) {
 			// 페이스북 로그인시
 			oAuth2UserInfo = new FacebookUserInfo(oAuth2User.getAttributes());
+		}else if(userRequest.getClientRegistration().getRegistrationId().equals("naver")) {
+			// 네이버 로그인시
+			oAuth2UserInfo = new NaverUserInfo((Map)oAuth2User.getAttributes().get("response"));
+		}else if(userRequest.getClientRegistration().getRegistrationId().equals("kakao")) {
+			// 카카오 로그인시
+			oAuth2UserInfo = new KakaoUserInfo(oAuth2User.getAttributes());
+		}else {
+			System.out.println("구글 , 페이스북, 네이버, 카카오 로그인만 지원됩니다.");
 		}
 		
 		String provider = oAuth2UserInfo.getProvider(); // google
@@ -54,7 +67,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService{
 		Member member = memberRepository.findByMembername(name);
 		
 		if(member == null) {
-			System.out.println("로그인이 최초입니다. 해당 구글아이디로 자동 회원가입 됩니다.");
+			System.out.println("로그인이 최초입니다. 해당 소셜 아이디로 자동 회원가입 됩니다.");
 			member = Member.builder()
 										.email(email)
 										.name(name)

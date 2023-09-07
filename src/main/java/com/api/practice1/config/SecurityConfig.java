@@ -51,16 +51,18 @@ public class SecurityConfig {
 		
 		httpSecurity.oauth2Login()
 							.loginPage("/member/member-login-form") // 구글 로그인이 완료된 뒤의 후처리 필요 
+							.failureHandler(loginFailHandler())
 							.userInfoEndpoint()
 							.userService(principalOauth2UserService);
 		
 		httpSecurity.logout()
 							.addLogoutHandler(new SecurityContextLogoutHandler())
 							.logoutSuccessUrl("/") // 로그아웃 후 리디렉션 url
-							.invalidateHttpSession(true) // 세션 무효화
-							.deleteCookies("JSESSIONID") // 쿠키 삭제
-							.permitAll();
-							
+							.deleteCookies("JSESSIONID", "remember-me-cookie") // 쿠키 삭제
+							.permitAll()
+							.and()
+							.rememberMe().disable();
+		
 		return httpSecurity.build();
 	}
 	
