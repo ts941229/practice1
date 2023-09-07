@@ -3,29 +3,68 @@
 <!-- head -->
 <th:block th:replace="/fragments/header.html :: fragment-header"/>
 <body>
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v17.0&appId=1270174613661792&autoLogAppEvents=1" nonce="Z0KOVlCB"></script>
+	
 
 	<!-- nav -->
 	<th:block th:replace="/fragments/nav.html :: fragment-nav" />
 	
 	<div class="container-sm mt-4">
-		<div>
-			<form action="#" th:action="@{/member/member-login}" method="post">
-				<input type="text" name="email" placeholder="아이디를 입력하세요.">
-				<input type="password" name="password" placeholder="비밀번호를 입력하세요.">
-				<button class="btn btn-primary">로그인</button>
-			</form>
+	
+		<div class="d-flex justify-content-center px-5">
+		
+			<div class="w-full max-w-md">
+				
+				<div class="text-center">로고 자리</div>
+				
+				<h2 class="mt-5 text-center fw-bold">환영합니다</h2>				
+				
+				<div class="mt-5">
+					<label for="social_login_container" class="fw-medium fs-6 fw-bold">SNS 로그인</label>
+					<div class="grid gap-3" id="social_login_container">
+					
+						<a href="/oauth2/authorization/google" class="g-col-4">
+							구글
+						</a>
+						<a href="/oauth2/authorization/facebook" class="g-col-4">
+							페이스북
+						</a>
+						<a href="/oauth2/authorization/naver" class="g-col-4">
+							네이버
+						</a>
+						<a href="/oauth2/authorization/kakao" class="g-col-4">
+							카카오
+						</a>
+						
+					</div>
+					
+					
+				</div>
+				
+				<div class="mt-5 mb-3">
+					<span>ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ</span>
+				</div>
+				
+				<form action="#" th:action="@{/member/member-login}" method="post">
+					<label for="email" class="fw-medium fs-6 fw-bold">아이디</label>
+					<input type="text" class="form-control mb-3 w-100" name="email" id="email" placeholder="아이디를 입력하세요.">
+
+					<label for="password" class="fw-medium fs-6 fw-bold">비밀번호</label>
+					<input type="password" class="form-control mb-3 w-100" name="password" id="password" placeholder="비밀번호를 입력하세요.">
+					<button class="btn btn-primary mb-3 w-100">로그인</button>
+				</form>
+				
+					
+					<div class="text-center">
+						<span class="fw-light">아이디가 없으신가요?</span>
+						<a href="/member/member-regist-form" class="mb-4 fw-light">회원가입</a>
+					</div>
+				
+			</div>
 			
-			<a href="/oauth2/authorization/google">구글 로그인</a>
-			<br/>
-			<a href="/oauth2/authorization/facebook">페이스북 로그인</a>
-			<br/>
-			<a href="/oauth2/authorization/naver">네이버 로그인</a>
-			<br/>
-			<a href="/oauth2/authorization/kakao">카카오 로그인</a>
-			
-			<br/>
-			<a href="/member/member-regist-form">아이디가 없으신가요?</a>
 		</div>
+		
 	</div>
 	
 	<br/>
